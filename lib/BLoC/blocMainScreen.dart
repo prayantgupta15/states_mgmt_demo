@@ -19,41 +19,64 @@ class BlocMainScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        home: BlocProvider<CounterBloc>(
-            create: (BuildContext context) => CounterBloc(),
-            child: BlocScreen()));
+      home: BlocProvider<CounterBloc>(
+          create: (BuildContext context) => CounterBloc(), child: BlocScreen()),
+
+//            BlocProvider<newCounterBloc>(
+//      create: (BuildContext context) => newCounterBloc(),
+//      child: BlocScreen(),
+//    ),
+    );
   }
 }
 
 class BlocScreen extends StatelessWidget {
   CounterBloc _counterBlocSink;
-  int a=0;
+//  newCounterBloc _newcounterBlocSink;
+  int ctr = 0;
   @override
   Widget build(BuildContext context) {
-    print("build"+(a++).toString());
     _counterBlocSink = BlocProvider.of<CounterBloc>(context);
+//    _newcounterBlocSink = BlocProvider.of<newCounterBloc>(context);
     return SafeArea(
       child: Scaffold(
+        appBar: AppBar(
+          title: Text("Build ${++ctr}"),
+        ),
         floatingActionButton: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
             FloatingActionButton(
               heroTag: null,
               child: Icon(Icons.add),
-              onPressed: ()=>_counterBlocSink.add(IncrementEvent()),
+              onPressed: () => _counterBlocSink.add(IncrementEvent()),
+
+//                  _newcounterBlocSink.add(newCounterEventBloc.increment),
             ),
             FloatingActionButton(
               heroTag: null,
               child: Icon(Icons.remove),
-              onPressed:()=> _counterBlocSink.add(DecrementEvent()),
+              onPressed: () => _counterBlocSink.add(DecrementEvent()),
+//                   _newcounterBlocSink.add(newCounterEventBloc.decrement),
             )
           ],
         ),
         body: BlocBuilder<CounterBloc, BlocStateBaseClass>(
-          builder: (BuildContext context, BlocStateBaseClass state) => Center(
-            child: Text((state as CurrentValueState).ctr.toString(),style: textStyle,),
+          builder: (BuildContext context, state) => Center(
+            child: Text(
+              (state as CurrentValueState).ctr.toString(),
+              style: textStyle,
+            ),
           ),
         ),
+//            BlocBuilder<newCounterBloc, int>(
+//          builder: (BuildContext context, state) => Center(
+//            child: Text(
+//              state.toString(),
+//              style: textStyle,
+//            ),
+//          ),
+//        ),
       ),
     );
   }

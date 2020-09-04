@@ -22,23 +22,25 @@ class ProviderScreen extends StatelessWidget {
   int ctr = 0;
   @override
   Widget build(BuildContext context) {
-     print('build');print((ctr++).toString());
     //STEP 3: MAKING AND LISTENING TO CHANGES
-//   METHOD 1: Using Provider.of<>
-//   final ModelClass _modelClass = Provider.of<ModelClass>(context,listen: true);
+//   METHOD 1: Using Provider.of<>  (build again n again)
+   final ModelClass _modelClass = Provider.of<ModelClass>(context,listen: true);
     return SafeArea(
       child: Scaffold(
-        //METHOD 2: Using Consumer
+        appBar: AppBar(
+          title: Text("Build ${++ctr}"),
+        ),
+        //METHOD 2: Using Consumer (build only Consumer Widget)
         body:
-        Consumer<ModelClass>(
-          builder: (BuildContext context, ModelClass _modelClass, Widget child)=>
+//        Consumer<ModelClass>(
+//          builder: (BuildContext context, ModelClass _modelClass, Widget child)=>
             Center(
              child: Text(_modelClass.getScore.toString(),style: textStyle,),
           ),
-        ),
+//        ),
         floatingActionButton:
-        Consumer<ModelClass>(
-          builder: (BuildContext context, ModelClass _modelClass, Widget child)=>
+//        Consumer<ModelClass>(
+//          builder: (BuildContext context, ModelClass _modelClass, Widget child)=>
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
@@ -54,7 +56,7 @@ class ProviderScreen extends StatelessWidget {
               ),
             ],
           ),
-        ),
+//        ),
       ),
     );
   }
